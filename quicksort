@@ -1,0 +1,49 @@
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
+
+int a[10001];
+
+void qs(int left, int right, int k)
+{
+	int i=left,j=right,t;
+	if(left >= right)
+	   return ;
+	while(i!=j)
+	{
+		while(j>i)
+		    if(a[j] < a[k])
+		       {
+			    t=a[j];
+		    	a[j]=a[k];
+		    	a[k]=t;
+			    k=j;
+			    break;
+		       }
+		    else
+		       j--;
+		while(i<j)
+		    if(a[i] > a[k])
+		       {
+			    t=a[i];
+		    	a[i]=a[k];
+		    	a[k]=t;
+			    k=i;
+			    break;
+		       }
+		    else
+		       i++;
+	}
+	qs(left,k-1,left);
+	qs(k+1,right,k+1);
+} 
+
+int main(){
+	int i;
+	while(cin >> a[i])
+	    i++;
+	qs(0,i-1,0);
+	while(i)
+	    cout << a[--i] << ' ';
+}
